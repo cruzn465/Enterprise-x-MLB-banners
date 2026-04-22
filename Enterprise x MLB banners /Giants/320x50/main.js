@@ -14,6 +14,19 @@ var stopWatch;
 
 //INITIALIZE
 function init(){
+
+    // Helper function for FOUC
+    let domReady = (cb) => {
+        document.readyState === 'interactive' || document.readyState === 'complete'
+        ? cb()
+        : document.addEventListener('DOMContentLoaded', cb);
+    };
+    
+    domReady(() => {
+        // Display body when DOM is loaded
+        document.body.style.visibility = 'visible';
+    });
+
     IDsToVars();
 
     container.style.width = dimensions.width + 'px';
@@ -23,10 +36,8 @@ function init(){
     tl = new TimelineLite();
 
     addListeners();
-
-    // animate() was taken out in doubleclick banner
-    animate();
     
+    animate();
 }
 
 function addListeners(){
@@ -71,14 +82,6 @@ function returnTimer(){
     console.log(stopWatch+" seconds");
 }
 
-// RM FXNS
-function myFunction() {
-  Enabler.exit('BackgroundExit');
-}
-
-function exitClickHandler() {
-  Enabler.exit('BackgroundExit');
-}
 function clickThrough(){
     window.open(clicktag);
 }
